@@ -28,8 +28,7 @@ module.exports = async function (context, myTimer) {
         }), 'logindata');
 
         loginSchema.deleteMany({
-            _class: '_logged.d',
-            loggedInTime: {$lt: new Date.getTime()}
+            _class: '_logged.d'
         }, (err) => {
             return;
         })
