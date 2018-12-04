@@ -13,25 +13,27 @@ module.exports = async function (context, myTimer) {
     const connectionString = `mongodb://${user}.documents.azure.com:10255/hf`;
 
     try {
-        mongoose.connect(`${connectionString}?ssl=true&replicaSet=globaldb`, {
+        mongoose.createConnection(`${connectionString}?ssl=true&replicaSet=globaldb`, {
             auth: {
                 user: user,
                 password: password
             },
             useNewUrlParser: true
         })
-        context.log('successfully connected to the database (login model)')
-        var loginSchema = mongoose.model('loggedIn', new mongoose.Schema({
-            _class: String,
-            email: String,
-            loggedInTime: Number
-        }), 'logindata');
-    
-        loginSchema.deleteMany({ _class: '_logged.d' }, (err, documents) => {
-            context.log(err);
-            context.log(documents);
-            context.done();
-        });
+        .then(conn => {
+            context.log('successfully connected to the database (login model)')
+            var loginSchema = conn.model('loggedIn', new mongoose.Schema({
+                _class: String,
+                email: String,
+                loggedInTime: Number
+            }), 'logindata');
+        
+            loginSchema.deleteMany({ _class: '_logged.d' }, (err, documents) => {
+                context.log(err);
+                context.log(documents);
+                context.done();
+            });
+        })
     }
     catch(e) {
         context.log(e);
