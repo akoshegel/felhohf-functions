@@ -1,8 +1,7 @@
 {
-    "name": "felhohf-logout",
-    "version": "0.0.0",
-    "dependencies": {
-      "mongoose": "^5.3.14"
-    }
+  "name": "felhohf-logout",
+  "version": "0.0.0",
+  "dependencies": {
+    "mongoose": "^5.3.14"
   }
-  
+}
